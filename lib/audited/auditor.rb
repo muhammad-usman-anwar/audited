@@ -115,7 +115,7 @@ module Audited
         enable_auditing
       end
 
-      def has_associated_audits(options = {})
+      def has_associated_audits(association_name = :associated_audits, **options)
         audit_klass = case options[:as]
         when Class
           options[:as]
@@ -133,7 +133,7 @@ module Audited
           raise "No audit class resolved. Please specify existing audit class using the `:as` option."
         end
 
-        has_many :associated_audits, as: :associated, class_name: audit_klass.name
+        has_many association_name, as: :associated, class_name: audit_klass.name
       end
 
       def update_audited_options(new_options)
